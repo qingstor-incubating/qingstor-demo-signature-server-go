@@ -1,0 +1,8 @@
+package: github.com/yunify/qingstor-demo-signature-server-go
+import:
+- package: github.com/pengsrc/go-shared
+  version: 454950d6a0782c34427d4f29b46c6bf447256f20
+- package: github.com/yunify/qingstor-sdk-go
+  version: 68ce7c233bde780b2bbe1e1cf018db8e2df86361
+- package: gopkg.in/yaml.v2
+  version: eb3733d160e74a9c7e442f435eb3bea458e1d19f

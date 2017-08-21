@@ -1,0 +1,7 @@
+# QingStor access key settings
+access_key_id: EXAMPLE_ACCESS_KEY_ID
+secret_access_key: EXAMPLE_SECRET_ACCESS_KEY
+
+# Signature server settings
+host: 127.0.0.1
+port: 9000

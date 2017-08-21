@@ -1,0 +1,13 @@
+# QingStor server settings
+host: qingstor.com
+port: 443
+protocol: https
+
+# Bucket settings.
+zone: pek3a
+bucket_name: test-bucket
+
+# Signature server settings
+signature_server_host: 127.0.0.1
+signature_server_port: 9000
+signature_server_protocol: http

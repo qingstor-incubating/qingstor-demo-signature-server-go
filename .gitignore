@@ -1,0 +1,6 @@
+# Ignore dependencies
+
+vendor
+
+# Ignore configure file in both client and server directories
+config_*.yaml
