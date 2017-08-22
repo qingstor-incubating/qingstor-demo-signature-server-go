@@ -6,6 +6,7 @@ import (
 	"crypto/sha256"
 	"encoding/base64"
 	"encoding/json"
+	"errors"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -38,20 +39,20 @@ func operationQueryHandle(w http.ResponseWriter, request *http.Request) {
 	headersMap, ok := headersInterface.(map[string]interface{})
 	if ok != true {
 		w.WriteHeader(http.StatusBadRequest)
-		log.Println(err.Error())
+		log.Println("Invalid headers.")
 		return
 	}
 
 	expiresInterface, ok := requestKeys["expires"]
 	if ok != true {
 		w.WriteHeader(http.StatusBadRequest)
-		log.Println(err.Error())
+		log.Println("Empty expires.")
 		return
 	}
 	stringExpires, ok := expiresInterface.(string)
 	if ok != true {
 		w.WriteHeader(http.StatusBadRequest)
-		log.Println(err.Error())
+		log.Println("Invalid expires.")
 		return
 	}
 	intExpires, err := strconv.Atoi(stringExpires)
@@ -118,7 +119,7 @@ func operationHeaderHandle(w http.ResponseWriter, request *http.Request) {
 	headersMap, ok := headersInterface.(map[string]interface{})
 	if ok != true {
 		w.WriteHeader(http.StatusBadRequest)
-		log.Println(err.Error())
+		log.Println("Invalid headers.")
 		return
 	}
 
@@ -131,6 +132,12 @@ func operationHeaderHandle(w http.ResponseWriter, request *http.Request) {
 
 	// Sign the request to sign.
 	stringToSign, err := signer.BuildStringToSign(requestToSign)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		log.Println(err.Error())
+		return
+	}
+
 	h := hmac.New(sha256.New, []byte(config.SecretAccessKey))
 	h.Write([]byte(stringToSign))
 	signature := strings.TrimSpace(base64.StdEncoding.EncodeToString(h.Sum(nil)))
@@ -170,46 +177,38 @@ func buildRequestToSign(request *http.Request) (*http.Request, map[string]interf
 
 	methodInterface, ok := requestKeys["method"]
 	if ok != true {
-		log.Println(err.Error())
-		return nil, nil, err
+		return nil, nil, errors.New("Empty method.")
 	}
 	methodString, ok := methodInterface.(string)
 	if ok != true {
-		log.Println(err.Error())
-		return nil, nil, err
+		return nil, nil, errors.New("Invalid method.")
 	}
 
 	hostInterface, ok := requestKeys["host"]
 	if ok != true {
-		log.Println(err.Error())
-		return nil, nil, err
+		return nil, nil, errors.New("Empty host.")
 	}
 	hostString, ok := hostInterface.(string)
 	if ok != true {
-		log.Println(err.Error())
-		return nil, nil, err
+		return nil, nil, errors.New("Invalid host.")
 	}
 
 	portInterface, ok := requestKeys["port"]
 	if ok != true {
-		log.Println(err.Error())
-		return nil, nil, err
+		return nil, nil, errors.New("Empty port.")
 	}
 	portString, ok := portInterface.(string)
 	if ok != true {
-		log.Println(err.Error())
-		return nil, nil, err
+		return nil, nil, errors.New("Invalid port.")
 	}
 
 	pathInterface, ok := requestKeys["path"]
 	if ok != true {
-		log.Println(err.Error())
-		return nil, nil, err
+		return nil, nil, errors.New("Empty path.")
 	}
 	pathString, ok := pathInterface.(string)
 	if ok != true {
-		log.Println(err.Error())
-		return nil, nil, err
+		return nil, nil, errors.New("Invalid path.")
 	}
 
 	queryString := ""
@@ -217,25 +216,21 @@ func buildRequestToSign(request *http.Request) (*http.Request, map[string]interf
 	if ok {
 		queryMap, ok := queryInterface.(map[string]interface{})
 		if ok != true {
-			log.Println(err.Error())
-			return nil, nil, err
+			return nil, nil, errors.New("Invalid query.")
 		}
 		queryString, err = generateStringQuery(queryMap)
 		if err != nil {
-			log.Println(err.Error())
 			return nil, nil, err
 		}
 	}
 
 	protocolInterface, ok := requestKeys["protocol"]
 	if ok != true {
-		log.Println(err.Error())
-		return nil, nil, err
+		return nil, nil, errors.New("Empty protocol.")
 	}
 	protocolString, ok := protocolInterface.(string)
 	if ok != true {
-		log.Println(err.Error())
-		return nil, nil, err
+		return nil, nil, errors.New("Invalid protocol.")
 	}
 
 	uriString := protocolString + "://" + hostString + ":" + portString + pathString
