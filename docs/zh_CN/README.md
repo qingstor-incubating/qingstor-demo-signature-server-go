@@ -1,4 +1,6 @@
 # 签名服务器样例 (Go)
+[![Build Status](https://travis-ci.org/Colin0114/qingstor-demo-signature-server-go.svg?branch=add_travis_ci)](https://travis-ci.org/Colin0114/qingstor-demo-signature-server-go)
+
 [English](../../README.md) | 中文
 
 本文档描述了如何使用 qingstor-sdk-go 来创建签名服务器样例，同时提供了 Go 版本的签名客户端样例。
