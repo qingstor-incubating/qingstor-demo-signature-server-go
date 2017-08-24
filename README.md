@@ -1,4 +1,6 @@
 # QingStor Demo Signature Server (Go)
+[![Build Status](https://travis-ci.org/Colin0114/qingstor-demo-signature-server-go.svg?branch=add_travis_ci)](https://travis-ci.org/Colin0114/qingstor-demo-signature-server-go)
+
 English | [中文](./docs/zh_CN/README.md)
 
 This project demonstrates how to use qingstor-sdk-go to create the QingStor Demo Signature Server,
