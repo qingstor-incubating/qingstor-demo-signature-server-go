@@ -10,7 +10,7 @@ imports:
 - name: github.com/sirupsen/logrus
   version: 3eef8ce63d02f65d2da43214faf7bb19b0b2bb7a
 - name: github.com/yunify/qingstor-sdk-go
-  version: 083a423b6a823db1fb2c2d552737a8db833da429
+  version: 1d2520aac34994497e30a97176b2496bb519b386
 - name: golang.org/x/sys
   version: f3918c30c5c2cb527c0b071a27c35120a6c0719a
   repo: https://github.com/golang/sys.git
