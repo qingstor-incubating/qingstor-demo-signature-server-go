@@ -58,6 +58,7 @@ func stringToSignQuery() {
 	}
 
 	// Add query parameters to getobject request to QingStor Object Storage.
+	getObjectRequest.Build()
 	getObjectRequest.ApplyQuerySignature(responseJSON.AccessKeyID, responseJSON.Expires, responseJSON.Signature)
 
 	testSignature(getObjectRequest, "Get Object")
@@ -96,6 +97,7 @@ func stringToSignHeader() {
 	}
 
 	// Add authorization to header of deleteobject request to QingStor Object Storage.
+	deleteObjectRequest.Build()
 	err = addAuthToHeader(deleteObjectRequest, signatureResponse)
 	if err != nil {
 		log.Println(err.Error())
